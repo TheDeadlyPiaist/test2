@@ -92,13 +92,58 @@ def repeatingLetterRec(input1:String, repeats:Int): Unit = {
 }
 
 def repeatingLettersSqRec(input1:String, repeats:Int, width:Int = 0): Unit = {
-	if(repeats > 0) {
 	
+	var _width = 0
+	var _repeats = repeats
+	
+	if(width != 0){
+		_width = width
+	} else {
+		_width = repeats
+	}
+	
+	var row:String = formRow(input1, _width)
+	if(repeats > 0) {
+		println(row)
+		_repeats -= 1
+		repeatingLettersSqRec(input1, _repeats, _width)
+		
 	}
 }
 
-def formRow(input1:String, length:Int, newString:String =""): Unit = {
+def formRow(singleLetter:String, length:Int, fullString:String =""): String = {
+	
+	var _fullString:String = ""
+	
+	if(fullString != "") {
+		_fullString = fullString
+	}
+	
+	if(length>0){
+		_fullString += singleLetter
+		var _length = length-1
+		formRow(singleLetter, _length, _fullString)
+	} else {
+		return _fullString
+	}
+}
 
+def stringJumbleRec(input1:String, input2:String, length:Int, currentN:Int = 1): Unit = {
+	var output:Any = ""
+	if(currentN%3 == 0 && currentN%5 != 0){
+		output = input1
+	} else if(currentN%3 != 0 && currentN%5 == 0) {
+		output = input2
+	} else if(currentN%3 == 0 && currentN%5 == 0) {
+		output = s"$input1$input2"
+	} else {
+		output = currentN
+	}
+	println(output)
+	
+	if(currentN < length) {
+		stringJumbleRec(input1, input2, length - 1, currentN + 1)
+	}
 }
 
 main()
@@ -128,5 +173,5 @@ rectangleLetters("r", 4, false)
 stringMuddle("LEL", "KEK", 30)
 
 repeatingLetterRec("A", 6)
-
-println(formRow("a", 5))
+repeatingLettersSqRec("B", 4)
+stringJumbleRec("Jelly", "Fish", 30)
