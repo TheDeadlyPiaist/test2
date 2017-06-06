@@ -36,4 +36,5 @@ object Garage extends App {
 	def calculateBill(timeTaken:Float, labourCost:Float, vehicle:Vehicle, partCost:Float): Float ={
 		return timeTaken*labourCost + partCost
 	}
+	print(Parts.bearing.getName())
 }
