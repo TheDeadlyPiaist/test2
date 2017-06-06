@@ -27,7 +27,18 @@ class Garage {
 	}
 	
 	def newEmployee(name:String, age:Int, annualWage:Float, jobRole:String): Unit ={
+		var newEmp:Employee = new Employee(name, age, annualWage, jobRole)
+		employeeList :+ newEmp
+	}
+	
+	def fixingVehicle(vehicle: Vehicle): Unit ={
 	
 	}
+	
+	def calculateBill(timeTaken:Float, labourCost:Float, vehicle:Vehicle, partCost:Float): Float ={
+		return timeTaken*labourCost + partCost
+	}
+	
+	
 	
 }

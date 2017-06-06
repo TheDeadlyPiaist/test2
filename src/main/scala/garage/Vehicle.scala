@@ -10,6 +10,8 @@ class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:Stri
 	private var _colour = colour
 	private var _vin = vin
 	
+	private var brokenParts:Array[String] = ()
+	
 	def setMake(nMake:String): Unit ={
 		_make = nMake
 	}
@@ -52,5 +54,9 @@ class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:Stri
 	
 	def initString(): String = {
 		return s"$_make, $_model, $_engineSize, $_colour, $_vin"
+	}
+	
+	def fixCar(): Unit ={
+		brokenParts = Array(null)
 	}
 }
