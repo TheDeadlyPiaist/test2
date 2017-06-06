@@ -50,4 +50,7 @@ class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:Stri
 		return _vin
 	}
 	
+	override def toString(): String = {
+		return s"$_make, $_model, $_engineSize, $_colour, $_vin"
+	}
 }

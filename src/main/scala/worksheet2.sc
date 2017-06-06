@@ -1,3 +1,1 @@
-var list:Array[String] = ()
-list.copyToArray(java.util.TimeZone.getAvailableIDs)
-println(list);
+var myList:Array[String] = java.util.TimeZone.getAvailableIDs
