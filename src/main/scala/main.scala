@@ -1,7 +1,7 @@
 /**
 	* Created by duane on 05/06/2017.
 	*/
-object main extends App {
+class main {
 	
 	def main(): Unit ={
 		println("Get gud")

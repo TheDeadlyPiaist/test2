@@ -1,12 +1,10 @@
 package garage
+import garage.Parts._
 
-/**
-	* Created by duane on 06/06/2017.
-	*/
 object Garage extends App {
 	
-	var bookedIn: Array[Vehicle] = (null)
-	var employeeList: Array[Employee] = (null)
+	var bookedIn: Array[Vehicle] = _
+	var employeeList: Array[Employee] = _
 	
 	def newCar(make:String, model:String, engineSize:Int, colour:String, vin:String): Unit ={
 		var vehicle:Car = new Car(make, model, engineSize, colour, vin)
@@ -38,5 +36,4 @@ object Garage extends App {
 	def calculateBill(timeTaken:Float, labourCost:Float, vehicle:Vehicle, partCost:Float): Float ={
 		return timeTaken*labourCost + partCost
 	}
-	
 }

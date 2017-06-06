@@ -3,49 +3,47 @@ package garage
 /**
 	* Created by duane on 06/06/2017.
 	*/
-class Parts (name:String, replaceCost:Float, timeToFix:Float = 0, partList:Array[Parts]=null, bike:Boolean = true, broken:Boolean=false) {
+case class Parts(name:String, replaceCost:Float, timeToFix:Float = 0, bike:Boolean = true, broken:Boolean=false) {
 	
 	private var iName:String = name
 	private var iReplaceCost:Float = replaceCost
-	private var iBroken:Boolean = broken
 	private var iTimeToFix:Float = timeToFix
 	private var iBike:Boolean = bike
-	partList :+ this
+	private var iBroken:Boolean = broken
 	
-	def setName(name:String): Unit ={
-		iName = name
+	def setName(inName:String):Unit = {
+		iName = inName
 	}
 	
-	def getName(): String ={
-		return iName
+	def getName():String = {
+		iName
 	}
 	
-	def setCost(cost:Float): Unit ={
-		iReplaceCost = cost
+	def setCost(inCost:Float):Unit = {
+		iReplaceCost = inCost
 	}
 	
-	def getCost(): Float ={
-		return iReplaceCost
+	def getCost():Float = {
+		iReplaceCost
 	}
 	
-	def setState(broken:Boolean): Unit = {
-		iBroken = broken
+	def setState(inBroken:Boolean):Unit = {
+		iBroken = inBroken
 	}
 	
-	def getState():Boolean ={
-		return iBroken
+	def getState():Boolean = {
+		iBroken
 	}
 	
-	def setTimeToFix(input:Float): Unit ={
-		iTimeToFix = input
+	def setTimeToFix(inTimeToFix:Float):Unit = {
+		iTimeToFix = inTimeToFix
 	}
 	
-	def getTimeToFix(): Float ={
-		return iTimeToFix
+	def getTimeToFix():Float = {
+		iTimeToFix
 	}
 	
-	def getBike(): Boolean ={ //Check to see if the part can be put onto a bike
-		return iBike
+	def getBike():Boolean = { //Check to see if the part can be put onto a bike
+		iBike
 	}
-	
 }
