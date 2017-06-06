@@ -39,6 +39,4 @@ class Garage {
 		return timeTaken*labourCost + partCost
 	}
 	
-	
-	
 }

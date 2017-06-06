@@ -59,7 +59,8 @@ class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:Stri
 	def breakCar(): Unit ={ //lel kek
 		var nof:Float = Math.round(Math.random()*3) //Number Of Faults : nof
 		for(i <- 0 to nof) {
-			brokenParts
+			var PartList:Array =
+			var rp:Float = Math.round(Math.random()*)
 		}
 	}
 	
