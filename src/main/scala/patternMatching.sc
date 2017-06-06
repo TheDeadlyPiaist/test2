@@ -17,15 +17,15 @@ def columnOfLetters(input:String, length:Int, caseS:Int = 1): Unit = {
 }
 
 
-def swappingValues(input:Any): Unit ={
-	var u1:Any = input[0]
-	var u2:Any = input[1]
+def swappingValues(input:Array[String]): Unit ={
+	var u1 = input(0)
+	var u2 = input(1)
 	
 	println(s"$u2,$u1")
 	
 }
 
-
+var a = Array("a", "5")
 
 columnOfLetters("a", 6)
-swappingValues(["a", "5"])
+swappingValues(a)

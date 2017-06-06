@@ -56,13 +56,7 @@ class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:Stri
 		return s"$_make, $_model, $_engineSize, $_colour, $_vin"
 	}
 	
-	def breakCar(): Unit ={ //lel kek
-		var nof:Float = Math.round(Math.random()*3) //Number Of Faults : nof
-		for(i <- 0 to nof) {
-			var PartList:Array =
-			var rp:Float = Math.round(Math.random()*)
-		}
-	}
+	abstract def breakVehicle(): Unit ={}
 	
 	def fixCar(): Unit ={
 		brokenParts = Array(null)
