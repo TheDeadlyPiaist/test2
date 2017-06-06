@@ -3,10 +3,10 @@ package garage
 /**
 	* Created by duane on 06/06/2017.
 	*/
-class Garage {
+object Garage extends App {
 	
-	var bookedIn: Array[Vehicle] = ()
-	var employeeList: Array[Employee] = ()
+	var bookedIn: Array[Vehicle] = (null)
+	var employeeList: Array[Employee] = (null)
 	
 	def newCar(make:String, model:String, engineSize:Int, colour:String, vin:String): Unit ={
 		var vehicle:Car = new Car(make, model, engineSize, colour, vin)

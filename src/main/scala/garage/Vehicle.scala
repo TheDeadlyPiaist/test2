@@ -4,59 +4,59 @@ package garage
 	* Created by duane on 05/06/2017.
 	*/
 class Vehicle(make:String, model:String, engineSize:Int, colour:String, vin:String) {
-	private var _make = make
-	private var _model = model
-	private var _engineSize = engineSize
-	private var _colour = colour
-	private var _vin = vin
+	private var iMake = make
+	private var iModel = model
+	private var iEngineSize = engineSize
+	private var iColour = colour
+	private var iVin = vin
 	
-	private var brokenParts:Array[String] = ()
+	private var brokenParts:Array[String] = (null)
 	
 	def setMake(nMake:String): Unit ={
-		_make = nMake
+		iMake = nMake
 	}
 	
 	def getMake(): String = {
-		return _make
+		return iMake
 	}
 	
 	def setModel(nModel:String): Unit ={
-		_model = nModel
+		iModel = nModel
 	}
 	
 	def getModel(): String = {
-		return _model
+		return iModel
 	}
 	
 	def setEngine(nEngine:Int): Unit ={
-		_engineSize = nEngine
+		iEngineSize = nEngine
 	}
 	
 	def getEngine(): Int = {
-		return _engineSize
+		return iEngineSize
 	}
 	
 	def setColour(nColour:String): Unit = {
-		_colour = nColour
+		iColour = nColour
 	}
 	
 	def getColour(): String = {
-		return _colour
+		return iColour
 	}
 	
 	def setVIN(nVin:String): Unit ={
-		_vin = nVin
+		iVin = nVin
 	}
 	
 	def getVIN(): String = {
-		return _vin
+		return iVin
 	}
 	
 	def initString(): String = {
-		return s"$_make, $_model, $_engineSize, $_colour, $_vin"
+		return s"$iMake, $iModel, $iEngineSize, $iColour, $iVin"
 	}
 	
-	abstract def breakVehicle(): Unit ={}
+	def breakVehicle(): Unit ={}
 	
 	def fixCar(): Unit ={
 		brokenParts = Array(null)

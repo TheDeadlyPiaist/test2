@@ -5,27 +5,26 @@ package garage
 	*/
 class Employee(name:String, age:Int, annualWage:Float, jobRole:String) extends Person(name:String, age:Int) {
 	
-	super(name, age)
-	private var _annualWage:Float = annualWage
-	private var _jobRole = jobRole
+	private var iAnnualWage:Float = annualWage
+	private var iJobRole = jobRole
 	
 	def setWage(nWage:Int): Unit ={
-		_annualWage = nWage
+		iAnnualWage = nWage
 	}
 	
 	def getWage(asString:Boolean=true): String = {
 		if(asString) {
-			return s"£$_annualWage"
+			return s"£$iAnnualWage"
 		} else {
-			return _annualWage.toString
+			return iAnnualWage.toString
 		}
 	}
 	
 	def setRole(nRole:String): Unit ={
-		_jobRole = nRole
+		iJobRole = nRole
 	}
 	
 	def getRole():String ={
-		return _jobRole
+		return iJobRole
 	}
 }

@@ -5,26 +5,26 @@ package garage
 	*/
 class Person(name:String, age:Int) {
 	
-	private var _name:String = name
-	private var _age:Int = age
+	private var iName:String = name
+	private var iAge:Int = age
 	
 	def setName(name:String): Unit = {
-		_name = name
+		iName = name
 	}
 	
 	def getName(): String = {
-		return _name
+		return iName
 	}
 	
 	def setAge(age:Int): Unit ={
-		_age = age
+		iAge = age
 	}
 	
 	def getAge(): Int ={
-		return _age
+		return iAge
 	}
 	
 	override def toString():String = {
-		return s"$_name $_age"
+		return s"$iName $iAge"
 	}
 }

@@ -5,7 +5,7 @@ package garage
 	*/
 class PartList {
 	
-	var totalParts:Array[Parts] = ()
+	var totalParts:Array[Parts] = (null)
 	
 	var bearing:Parts = new Parts("Bearing", 10, 20, totalParts)
 	var flyWheel:Parts = new Parts("Flywheel", 300, 180, totalParts)
