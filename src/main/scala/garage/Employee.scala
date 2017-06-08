@@ -25,15 +25,12 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 	def getRole:String = iJobRole
 	
 	def resetTime():Unit = iAvailableTime = 480
-	def useTime(amount:Float):Unit = iAvailableTime -= amount
+	def useTime(amount:Float):Unit = iAvailableTime = iAvailableTime - amount
+	def hasTime(vehicle: Vehicle):Boolean = if(iAvailableTime >= vehicle.getTotalTime) true else false
 	
-	def newJob(vehicle: Vehicle): Boolean ={
-		if(iAvailableTime >= vehicle.getTotalTime()) {
-			currentJobs += vehicle
-			useTime(vehicle.getTotalTime())
-			true
-		} else {
-			false
-		}
+	def getCurrentJobs:ArrayBuffer[Vehicle] = currentJobs
+	def newJob(vehicle: Vehicle):Unit ={
+		currentJobs = currentJobs :+ vehicle
+		useTime(vehicle.getTotalTime)
 	}
 }

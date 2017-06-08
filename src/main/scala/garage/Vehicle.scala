@@ -16,34 +16,34 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	var partList:ArrayBuffer[Parts] = ArrayBuffer()
 	private var iWorkedOn:Employee = null
 	
-	def setMake(nMake:String) = iMake = nMake
+	def setMake(nMake:String):Unit = iMake = nMake
 	def getMake: String = iMake
 	def setModel(nModel:String): Unit ={
 		iModel = nModel
 	}
 	def getModel(): String = {
-		return iModel
+		iModel
 	}
 	def setEngine(nEngine:Int): Unit ={
 		iEngineSize = nEngine
 	}
 	def getEngine(): Int = {
-		return iEngineSize
+		iEngineSize
 	}
 	def setColour(nColour:String): Unit = {
 		iColour = nColour
 	}
 	def getColour(): String = {
-		return iColour
+		iColour
 	}
 	def setVIN(nVin:String): Unit ={
 		iVin = nVin
 	}
 	def getVIN(): String = {
-		return iVin
+		iVin
 	}
 	def initString(): String = {
-		return s"$iMake, $iModel, $iEngineSize, $iColour, $iVin"
+		s"$iMake, $iModel, $iWorkedOn"
 	}
 	def checkVehicle(): ArrayBuffer[Parts] ={
 		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
@@ -66,7 +66,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def fixCar(): Unit ={
 	
 	}
-	def getTotalTime(): Float ={
+	def getTotalTime: Float ={
 		var listCheck:ArrayBuffer[Parts] = new ArrayBuffer[Parts]()
 		var totalTime:Float = 0
 		listCheck = checkVehicle()
@@ -76,7 +76,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		totalTime
 	}
 	
-	def getWorkedOn = if(iWorkedOn != null) true else false
-	def getWorkedOnBy = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
-	def beingWorkedOn(employee: Employee) = iWorkedOn = employee
+	def getWorkedOn:Boolean = if(iWorkedOn != null) {true} else {false}
+	def getWorkedOnBy:Any = if(iWorkedOn != null) {iWorkedOn} else {"Not being worked on"}
+	def beingWorkedOn(employee: Employee):Unit = {iWorkedOn = employee}
 }

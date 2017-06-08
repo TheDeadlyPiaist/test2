@@ -67,20 +67,31 @@ object Garage extends App {
 			newBike()
 		}
 		for(i <- bookedIn.indices) {
-			totalTime += bookedIn(i).getTotalTime()
+			totalTime += bookedIn(i).getTotalTime
 		}
 		timeNeeded = totalTime
+		assignJobs()
+		printJobs()
 	}
 	def assignJobs (): Unit ={
-		for(i <- bookedIn.indices if !bookedIn(i).getWorkedOn) {
-				for(j <- employeeList.indices if employeeList(j).getRole == "Mechanic" && employeeList(j).newJob(bookedIn(i))) {
-					bookedIn(i).beingWorkedOn(employeeList(j))
+		for(i <- bookedIn.indices) {
+			if(!bookedIn(i).getWorkedOn) {
+				for(j <- employeeList.indices) {
+					if(employeeList(j).getRole == "Mechanic" && employeeList(j).hasTime(bookedIn(i))) {
+						employeeList(j).newJob(bookedIn(i))
+						bookedIn(i).beingWorkedOn(employeeList(j))
+					}
 				}
 			}
 		}
 	}
-	
 	def printJobs(): Unit = {
-	
+		for(i <- employeeList.indices if employeeList(i).getRole == "Mechanic") {
+			println(employeeList(i).toString())
+			for(j <- employeeList(i).getCurrentJobs.indices) {
+				val printVeh = employeeList(i).getCurrentJobs(j).toString
+				println(s"           $printVeh")
+			}
+		}
 	}
 }
