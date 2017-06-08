@@ -60,10 +60,10 @@ object Garage extends App {
 	def openGarage (): Unit ={
 		var totalTime:Float = 0
 		totalAvailableTime = timePerDayPerPerson*employeeList.length
-		for(i <- 0 to 8) {
+		for(i <- 1 to 8) {
 			newCar()
 		}
-		for(i <- 0 to 3) {
+		for(i <- 1 to 3) {
 			newBike()
 		}
 		for(i <- bookedIn.indices) {
@@ -74,10 +74,11 @@ object Garage extends App {
 		printJobs()
 	}
 	def assignJobs (): Unit ={
+		bookedIn(0).beingWorkedOn(employeeList(0))
 		for(i <- bookedIn.indices) {
 			if(!bookedIn(i).getWorkedOn) {
-				for(j <- employeeList.indices) {
-					if(employeeList(j).getRole == "Mechanic" && employeeList(j).hasTime(bookedIn(i))) {
+				for(j <- employeeList.indices if !bookedIn(i).getWorkedOn) {
+					if(employeeList(j).hasTime(bookedIn(i))) {
 						employeeList(j).newJob(bookedIn(i))
 						bookedIn(i).beingWorkedOn(employeeList(j))
 					}
@@ -91,6 +92,12 @@ object Garage extends App {
 			for(j <- employeeList(i).getCurrentJobs.indices) {
 				val printVeh = employeeList(i).getCurrentJobs(j).toString
 				println(s"           $printVeh")
+			}
+		}
+		println("")
+		for(i <- bookedIn.indices) {
+			if(!bookedIn(i).getWorkedOn) {
+				println("Hasn't been done: "+bookedIn(i))
 			}
 		}
 	}

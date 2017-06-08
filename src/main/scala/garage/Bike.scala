@@ -16,6 +16,6 @@ class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="",
 	}
 	
 	override def toString(): String = {
-		"Car: " + initString()
+		"Bike: " + initString()
 	}
 }

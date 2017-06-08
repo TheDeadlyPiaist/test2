@@ -43,7 +43,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		iVin
 	}
 	def initString(): String = {
-		s"$iMake, $iModel, $iWorkedOn"
+		s"$iMake, $iModel"
 	}
 	def checkVehicle(): ArrayBuffer[Parts] ={
 		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
@@ -55,15 +55,15 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		}
 		returnArray
 	}
-	def breakVehicle(): Unit ={
-		for(i <- partList.indices) {
-			val rand:Double = Math.random()
-			if(rand < 0.1) {
-				partList(i).setState(true)
-			}
+	def breakVehicle():Unit ={
+		var brokenPieces:Int = 0
+		while(brokenPieces < 3) {
+			var rand:Int = Math.round(Math.random()*(partList.length-1)).toInt
+			partList(rand).setState(true)
+			brokenPieces = brokenPieces + 1
 		}
 	}
-	def fixCar(): Unit ={
+	def fixVehicle(timeGiven:Int): Unit ={
 	
 	}
 	def getTotalTime: Float ={
@@ -76,7 +76,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		totalTime
 	}
 	
-	def getWorkedOn:Boolean = if(iWorkedOn != null) {true} else {false}
-	def getWorkedOnBy:Any = if(iWorkedOn != null) {iWorkedOn} else {"Not being worked on"}
-	def beingWorkedOn(employee: Employee):Unit = {iWorkedOn = employee}
+	def getWorkedOn:Boolean = if(iWorkedOn != null) true else false
+	def getWorkedOnBy:Any = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
+	def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee
 }

@@ -40,12 +40,12 @@ object Parts {
 		}
 	}
 	
-	var bearing:Parts = Parts("Bearing", 10, 20)
-	var flyWheel:Parts = Parts("Flywheel", 300, 90)
-	var wingMirror:Parts = Parts("Wing Mirror", 25, 20)
-	var brakeCable:Parts = Parts("Brake Cable", 15, 30)
-	var cvJoint:Parts = Parts("Constant Velocity Joint", 30, 30, false)
-	var brakePad:Parts = Parts("Brake Pad x4", 30, 20)
+	var bearing:Parts = Parts("Bearing", 10, 10)
+	var flyWheel:Parts = Parts("Flywheel", 300, 60)
+	var wingMirror:Parts = Parts("Wing Mirror", 25, 10)
+	var brakeCable:Parts = Parts("Brake Cable", 15, 15)
+	var cvJoint:Parts = Parts("Constant Velocity Joint", 30, 20, false)
+	var brakePad:Parts = Parts("Brake Pad x4", 30, 10)
 	var sparkPlug:Parts = Parts("Spark Plug", 4, 10)
 	var brakeDisc:Parts = Parts("Brake Disc", 25, 30)
 	var headlightUnit:Parts = Parts("Headlight Unit", 20, 10)
@@ -64,7 +64,7 @@ object Parts {
 		}	else {
 			for(i <- pList.indices) {
 				if(pList(i).getBike) {
-					returnList :+ pList(i)
+					returnList = returnList :+ pList(i)
 				}
 			}
 		}

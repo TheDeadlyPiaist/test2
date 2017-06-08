@@ -26,6 +26,7 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 	
 	def resetTime():Unit = iAvailableTime = 480
 	def useTime(amount:Float):Unit = iAvailableTime = iAvailableTime - amount
+	def remainingTime:Float = iAvailableTime
 	def hasTime(vehicle: Vehicle):Boolean = if(iAvailableTime >= vehicle.getTotalTime) true else false
 	
 	def getCurrentJobs:ArrayBuffer[Vehicle] = currentJobs

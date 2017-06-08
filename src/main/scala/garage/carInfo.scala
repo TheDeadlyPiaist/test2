@@ -46,8 +46,8 @@ object carInfo {
 			rArray = ArrayBuffer(rMake, rModel)
 		} else {
 			rand = Math.round(Math.random()*(bikeList.length-1)).toInt
-			rMake = carList(rand).getMake
-			rModel = carList(rand).getModel
+			rMake = bikeList(rand).getMake
+			rModel = bikeList(rand).getModel
 			rArray = ArrayBuffer(rMake, rModel)
 		}
 		rArray
