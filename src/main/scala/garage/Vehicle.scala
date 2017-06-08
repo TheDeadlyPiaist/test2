@@ -14,13 +14,10 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	private var iColour = colour
 	private var iVin = vin
 	var partList:ArrayBuffer[Parts] = ArrayBuffer()
+	private var iWorkedOn:Employee = null
 	
-	def setMake(nMake:String): Unit ={
-		iMake = nMake
-	}
-	def getMake(): String = {
-		return iMake
-	}
+	def setMake(nMake:String) = iMake = nMake
+	def getMake: String = iMake
 	def setModel(nModel:String): Unit ={
 		iModel = nModel
 	}
@@ -78,4 +75,8 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		}
 		totalTime
 	}
+	
+	def getWorkedOn = if(iWorkedOn != null) true else false
+	def getWorkedOnBy = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
+	def beingWorkedOn(employee: Employee) = iWorkedOn = employee
 }

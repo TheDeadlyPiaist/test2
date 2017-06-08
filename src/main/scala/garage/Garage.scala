@@ -72,6 +72,14 @@ object Garage extends App {
 		timeNeeded = totalTime
 	}
 	def assignJobs (): Unit ={
-	
+		for(i <- bookedIn.indices) {
+			if(!bookedIn(i).getWorkedOn) {
+				for(j <- employeeList.indices) {
+					if(employeeList(j).newJob(bookedIn(i))) {
+						bookedIn(i).beingWorkedOn(employeeList(j))
+					}
+				}
+			}
+		}
 	}
 }
