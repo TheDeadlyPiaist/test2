@@ -63,8 +63,15 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 			brokenPieces = brokenPieces + 1
 		}
 	}
-	def fixVehicle(timeGiven:Int): Unit ={
-	
+	def fixVehicle(timeGiven:Float):Float ={
+		var iTimeGiven:Float = timeGiven
+		for(i <- partList.indices) {
+			if(partList(i).getState && iTimeGiven >= partList(i).getTimeToFix) {
+				partList(i).setState(false)
+				iTimeGiven = iTimeGiven - partList(i).getTimeToFix
+			}
+		}
+		timeGiven - iTimeGiven
 	}
 	def getTotalTime: Float ={
 		var listCheck:ArrayBuffer[Parts] = new ArrayBuffer[Parts]()

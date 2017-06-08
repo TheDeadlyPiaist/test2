@@ -38,6 +38,8 @@ object Parts {
 		def getBike:Boolean = { //Check to see if the part can be put onto a bike
 			iBike
 		}
+		
+		override def toString:String = getName
 	}
 	
 	var bearing:Parts = Parts("Bearing", 10, 10)

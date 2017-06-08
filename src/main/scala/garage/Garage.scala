@@ -6,18 +6,18 @@ object Garage extends App {
 	var bookedIn: ArrayBuffer[Vehicle] = ArrayBuffer()
 	var employeeList: ArrayBuffer[Employee] = ArrayBuffer()
 	
-	var timeNeeded:Float = 0
+	//var timeNeeded:Float = 0
 	var timePerDayPerPerson:Float = 480
-	var totalAvailableTime:Float = 0
+	//var totalAvailableTime:Float = 0
 	
 	init()
 	openGarage()
 	
 	def init(): Unit ={
-		val jack:Employee = new Employee("Jack", 21, 21000, "Mechanic")
-		val bob:Employee = new Employee("Bob", 31, 33000, "Mechanic")
-		val jess:Employee = new Employee("Jessica", 24, 27000, "Mechanic")
-		val sarah:Employee = new Employee("Sarah", 29, 27500, "Mechanic")
+		val jack:Employee = new Employee("Jack", 21, 21000, "Mechanic", timePerDayPerPerson)
+		val bob:Employee = new Employee("Bob", 31, 33000, "Mechanic", timePerDayPerPerson)
+		val jess:Employee = new Employee("Jessica", 24, 27000, "Mechanic", timePerDayPerPerson)
+		val sarah:Employee = new Employee("Sarah", 29, 27500, "Mechanic", timePerDayPerPerson)
 		employeeList += jack
 		employeeList += bob
 		employeeList += jess
@@ -58,20 +58,20 @@ object Garage extends App {
 	}
 	
 	def openGarage (): Unit ={
-		var totalTime:Float = 0
-		totalAvailableTime = timePerDayPerPerson*employeeList.length
+		//var totalTime:Float = 0
+		//totalAvailableTime = timePerDayPerPerson*employeeList.length
 		for(i <- 1 to 8) {
 			newCar()
 		}
 		for(i <- 1 to 3) {
 			newBike()
 		}
-		for(i <- bookedIn.indices) {
-			totalTime += bookedIn(i).getTotalTime
-		}
-		timeNeeded = totalTime
+		//for(i <- bookedIn.indices) {
+		//	totalTime += bookedIn(i).getTotalTime
+		//}
+		//timeNeeded = totalTime
 		assignJobs()
-		printJobs()
+		fixVehicles()
 	}
 	def assignJobs (): Unit ={
 		bookedIn(0).beingWorkedOn(employeeList(0))
@@ -86,9 +86,30 @@ object Garage extends App {
 			}
 		}
 	}
+	def fixVehicles():Unit ={
+		for(i <- employeeList.indices) {
+			println("=================================================================================")
+			println("Employee: "+employeeList(i).getName())
+			println("Total time: "+employeeList(i).remainingTime)
+			println("Jobs: "+employeeList(i).getCurrentJobs.length)
+			println("")
+			for(j <- employeeList(i).getCurrentJobs.indices) {
+				println("------------")
+				val rt:Float = employeeList(i).remainingTime //Remaining time
+				val tu:Float = employeeList(i).getCurrentJobs(j).fixVehicle(rt) //Time used
+				val tn:Float = employeeList(i).getCurrentJobs(j).getTotalTime
+				employeeList(i).useTime(tu)
+				println("Vehicle: "+employeeList(i).getCurrentJobs(j).toString)
+				println(s"			Time Needed: $tn			Time used: $tu 			Time remaining: "+employeeList(i).remainingTime)
+				var brokenPartsAsString = employeeList(i).getCurrentJobs(j).checkVehicle()
+				println(brokenPartsAsString.map(a => a.getName).toString())
+			}
+			println("------------")
+		}
+		println("=================================================================================")
+	}
 	def printJobs(): Unit = {
 		for(i <- employeeList.indices if employeeList(i).getRole == "Mechanic") {
-			println(employeeList(i).toString())
 			for(j <- employeeList(i).getCurrentJobs.indices) {
 				val printVeh = employeeList(i).getCurrentJobs(j).toString
 				println(s"           $printVeh")
@@ -97,7 +118,6 @@ object Garage extends App {
 		println("")
 		for(i <- bookedIn.indices) {
 			if(!bookedIn(i).getWorkedOn) {
-				println("Hasn't been done: "+bookedIn(i))
 			}
 		}
 	}
