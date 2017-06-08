@@ -25,6 +25,6 @@ class Person(name:String, age:Int) {
 	}
 	
 	override def toString():String = {
-		return s"$iName $iAge"
+		s"Name:$iName Age:$iAge"
 	}
 }

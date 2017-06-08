@@ -48,7 +48,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def checkVehicle(): ArrayBuffer[Parts] ={
 		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
 		for(i <- partList.indices) {
-			if(partList(i).getState()) {
+			if(partList(i).getState) {
 				var part:Parts = partList(i)
 				returnArray = returnArray :+ part
 			}
@@ -71,7 +71,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		var totalTime:Float = 0
 		listCheck = checkVehicle()
 		for(i <- listCheck.indices) {
-			totalTime += listCheck(i).getTimeToFix()
+			totalTime += listCheck(i).getTimeToFix
 		}
 		totalTime
 	}

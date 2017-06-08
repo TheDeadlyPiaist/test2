@@ -54,7 +54,7 @@ object Garage extends App {
 	}
 	
 	def calculateBill(timeTaken:Float, labourCost:Float, vehicle:Vehicle, partCost:Float): Float ={
-		return timeTaken*labourCost + partCost
+		timeTaken*labourCost + partCost
 	}
 	
 	def openGarage (): Unit ={
@@ -72,14 +72,15 @@ object Garage extends App {
 		timeNeeded = totalTime
 	}
 	def assignJobs (): Unit ={
-		for(i <- bookedIn.indices) {
-			if(!bookedIn(i).getWorkedOn) {
-				for(j <- employeeList.indices) {
-					if(employeeList(j).newJob(bookedIn(i))) {
-						bookedIn(i).beingWorkedOn(employeeList(j))
-					}
+		for(i <- bookedIn.indices if !bookedIn(i).getWorkedOn) {
+				for(j <- employeeList.indices if employeeList(j).getRole == "Mechanic" && employeeList(j).newJob(bookedIn(i))) {
+					bookedIn(i).beingWorkedOn(employeeList(j))
 				}
 			}
 		}
+	}
+	
+	def printJobs(): Unit = {
+	
 	}
 }

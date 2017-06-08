@@ -12,7 +12,7 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 	private var iAvailableTime = availableTime
 	private var currentJobs:ArrayBuffer[Vehicle] = ArrayBuffer()
 	
-	def setWage(nWage:Int) = iAnnualWage = nWage
+	def setWage(nWage:Int):Unit = iAnnualWage = nWage
 	def getWage(asString:Boolean=true): Either[String, Float] = {
 		if(asString) {
 			Left(s"£$iAnnualWage")
@@ -21,11 +21,11 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 		}
 	}
 	
-	def setRole(nRole:String) = iJobRole = nRole
-	def getRole():String = iJobRole
+	def setRole(nRole:String):Unit = iJobRole = nRole
+	def getRole:String = iJobRole
 	
-	def resetTime = iAvailableTime = 480
-	def useTime(amount:Float) = iAvailableTime -= amount
+	def resetTime():Unit = iAvailableTime = 480
+	def useTime(amount:Float):Unit = iAvailableTime -= amount
 	
 	def newJob(vehicle: Vehicle): Boolean ={
 		if(iAvailableTime >= vehicle.getTotalTime()) {
