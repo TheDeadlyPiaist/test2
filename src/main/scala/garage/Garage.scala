@@ -24,13 +24,11 @@ object Garage extends App {
 		employeeList += sarah
 		
 	}
-	def newCar(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Unit ={
-		var newVehicle:Car = new Car(make, model, engineSize, colour, vin)
-		bookedIn = bookedIn :+ newVehicle
+	def newCar(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Vehicle ={
+		new Car(make, model, engineSize, colour, vin)
 	}
-	def newBike(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Unit ={
-		val newVehicle:Bike = new Bike(make, model, engineSize, colour, vin)
-		bookedIn = bookedIn :+ newVehicle
+	def newBike(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Bike ={
+		new Bike(make, model, engineSize, colour, vin)
 	}
 	def removeVehicle(vehicle: Vehicle): Unit ={
 		for(i <- bookedIn.indices) {
@@ -59,10 +57,10 @@ object Garage extends App {
 		//var totalTime:Float = 0
 		//totalAvailableTime = timePerDayPerPerson*employeeList.length
 		for(i <- 1 to 8) {
-			newCar()
+			bookedIn = bookedIn :+ newCar()
 		}
 		for(i <- 1 to 3) {
-			newBike()
+			bookedIn = bookedIn :+ newBike()
 		}
 		//for(i <- bookedIn.indices) {
 		//	totalTime += bookedIn(i).getTotalTime
@@ -109,11 +107,7 @@ object Garage extends App {
 		println("=================================================================================")
 	}
 	def breakVehicles():Unit ={
-		for(i <- bookedIn.indices) {
-			if(bookedIn(i).checkVehicle().length == 0) {
-				bookedIn(i).breakVehicle()
-			}
-		}
+		bookedIn.foreach(a => if(a.checkVehicle().isEmpty){a.breakVehicle()})
 	}
 	def printJobs(): Unit = {
 		for(i <- employeeList.indices if employeeList(i).getRole == "Mechanic") {
