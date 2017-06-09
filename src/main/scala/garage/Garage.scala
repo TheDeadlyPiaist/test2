@@ -25,14 +25,12 @@ object Garage extends App {
 		
 	}
 	def newCar(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Unit ={
-		val vehicle:Car = new Car(make, model, engineSize, colour, vin)
-		vehicle.breakVehicle()
-		bookedIn = bookedIn :+ vehicle
+		var newVehicle:Car = new Car(make, model, engineSize, colour, vin)
+		bookedIn = bookedIn :+ newVehicle
 	}
 	def newBike(make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String=""): Unit ={
-		val vehicle:Bike = new Bike(make, model, engineSize, colour, vin)
-		vehicle.breakVehicle()
-		bookedIn = bookedIn :+ vehicle
+		val newVehicle:Bike = new Bike(make, model, engineSize, colour, vin)
+		bookedIn = bookedIn :+ newVehicle
 	}
 	def removeVehicle(vehicle: Vehicle): Unit ={
 		for(i <- bookedIn.indices) {
@@ -70,11 +68,13 @@ object Garage extends App {
 		//	totalTime += bookedIn(i).getTotalTime
 		//}
 		//timeNeeded = totalTime
+		breakVehicles()
 		assignJobs()
+		bookedIn.foreach(a => println(a +" " + a.checkVehicle()+ " " + a.getTotalTime))
 		fixVehicles()
+		bookedIn.foreach(a => println(a +" " + a.checkVehicle()+ " " + a.getTotalTime))
 	}
 	def assignJobs (): Unit ={
-		bookedIn(0).beingWorkedOn(employeeList(0))
 		for(i <- bookedIn.indices) {
 			if(!bookedIn(i).getWorkedOn) {
 				for(j <- employeeList.indices if !bookedIn(i).getWorkedOn) {
@@ -87,26 +87,33 @@ object Garage extends App {
 		}
 	}
 	def fixVehicles():Unit ={
-		for(i <- employeeList.indices) {
+		employeeList.foreach(i => {
 			println("=================================================================================")
-			println("Employee: "+employeeList(i).getName())
-			println("Total time: "+employeeList(i).remainingTime)
-			println("Jobs: "+employeeList(i).getCurrentJobs.length)
+			println("Employee: " + i.getName())
+			println("Total energy: " + i.energyGet)
+			println("Jobs: " + i.getCurrentJobs.length)
 			println("")
-			for(j <- employeeList(i).getCurrentJobs.indices) {
+			i.getCurrentJobs.foreach(j => {
+				var brokenPartsAsString = j
 				println("------------")
-				val rt:Float = employeeList(i).remainingTime //Remaining time
-				val tu:Float = employeeList(i).getCurrentJobs(j).fixVehicle(rt) //Time used
-				val tn:Float = employeeList(i).getCurrentJobs(j).getTotalTime
-				employeeList(i).useTime(tu)
-				println("Vehicle: "+employeeList(i).getCurrentJobs(j).toString)
-				println(s"			Time Needed: $tn			Time used: $tu 			Time remaining: "+employeeList(i).remainingTime)
-				var brokenPartsAsString = employeeList(i).getCurrentJobs(j).checkVehicle()
-				println(brokenPartsAsString.map(a => a.getName).toString())
-			}
+				val tn:Float = j.getTotalTime //Time needed
+				val rt:Float = i.energyGet //Remaining time
+				val tu:Float = j.fixVehicle(rt) //Time used
+				i.energyUse(tu)
+				println("Vehicle: " + j.toString)
+				println(s"			Time Needed: $tn			Time used: $tu 			Energy remaining: " + i.energyGet)
+				println(brokenPartsAsString)
+			})
 			println("------------")
-		}
+		})
 		println("=================================================================================")
+	}
+	def breakVehicles():Unit ={
+		for(i <- bookedIn.indices) {
+			if(bookedIn(i).checkVehicle().length == 0) {
+				bookedIn(i).breakVehicle()
+			}
+		}
 	}
 	def printJobs(): Unit = {
 		for(i <- employeeList.indices if employeeList(i).getRole == "Mechanic") {

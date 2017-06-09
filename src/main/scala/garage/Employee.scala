@@ -9,7 +9,8 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 	
 	private var iAnnualWage:Float = annualWage
 	private var iJobRole = jobRole
-	var iAvailableTime = availableTime
+	private var iAvailableTime = availableTime
+	private var energy:Float = availableTime
 	private var currentJobs:ArrayBuffer[Vehicle] = ArrayBuffer()
 	
 	def setWage(nWage:Int):Unit = iAnnualWage = nWage
@@ -28,6 +29,9 @@ class Employee(name:String, age:Int, annualWage:Float, jobRole:String, available
 	def useTime(amount:Float):Unit = {iAvailableTime = iAvailableTime - amount}
 	def remainingTime:Float = iAvailableTime
 	def hasTime(vehicle: Vehicle):Boolean = if(iAvailableTime >= vehicle.getTotalTime) true else false
+	
+	def energyUse(amount:Float):Unit = {energy=energy-amount}
+	def energyGet = energy
 	
 	def getCurrentJobs:ArrayBuffer[Vehicle] = currentJobs
 	def newJob(vehicle: Vehicle):Unit ={

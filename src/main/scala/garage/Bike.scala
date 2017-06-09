@@ -5,9 +5,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
 	* Created by duane on 06/06/2017.
 	*/
-class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String="") extends Vehicle(make, model, engineSize, colour, vin) {
-	
-	partList = partList ++ Parts.getParts(false)
+class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String="") extends Vehicle(make, model, engineSize, colour, vin, false) {
 	
 	if(make == "" && model == "") {
 		var makeModel:ArrayBuffer[String] = carInfo.randomMM(false)

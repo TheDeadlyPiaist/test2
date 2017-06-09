@@ -1,13 +1,13 @@
 package garage
 
-import garage.Parts.Parts
+import garage.Parts._
 
 import scala.collection.mutable.ArrayBuffer
 
 /**
 	* Created by duane on 05/06/2017.
 	*/
-class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin:String="") {
+class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin:String="", car:Boolean=true) {
 	private var iMake = make
 	private var iModel = model
 	private var iEngineSize = engineSize
@@ -15,6 +15,14 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	private var iVin = vin
 	var partList:ArrayBuffer[Parts] = ArrayBuffer()
 	private var iWorkedOn:Employee = null
+	
+	partList = Parts.getParts(car)
+	
+	def clearFaults():Unit ={
+		for(i <- partList.indices) {
+			partList(i).setState(false)
+		}
+	}
 	
 	def setMake(nMake:String):Unit = iMake = nMake
 	def getMake: String = iMake
@@ -56,11 +64,9 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		returnArray
 	}
 	def breakVehicle():Unit ={
-		var brokenPieces:Int = 0
-		while(brokenPieces < 3) {
+		for(i <- 0 until 3) {
 			var rand:Int = Math.round(Math.random()*(partList.length-1)).toInt
 			partList(rand).setState(true)
-			brokenPieces = brokenPieces + 1
 		}
 	}
 	def fixVehicle(timeGiven:Float):Float ={
@@ -86,4 +92,5 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def getWorkedOn:Boolean = if(iWorkedOn != null) true else false
 	def getWorkedOnBy:Any = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
 	def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee
+	
 }
