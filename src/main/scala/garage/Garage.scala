@@ -66,11 +66,17 @@ object Garage extends App {
 		//	totalTime += bookedIn(i).getTotalTime
 		//}
 		//timeNeeded = totalTime
+		
 		breakVehicles()
+		
+		bookedIn.foreach(i => {
+			println("Vehicle: " + i.getMake + " " + i.getModel() + " 	Broken Parts: " + i.checkVehicle())
+		})
+		println("")
+		println("")
+		
 		assignJobs()
-		bookedIn.foreach(a => println(a +" " + a.checkVehicle()+ " " + a.getTotalTime))
 		fixVehicles()
-		bookedIn.foreach(a => println(a +" " + a.checkVehicle()+ " " + a.getTotalTime))
 	}
 	def assignJobs (): Unit ={
 		for(i <- bookedIn.indices) {

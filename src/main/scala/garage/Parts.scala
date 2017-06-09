@@ -58,8 +58,9 @@ object Parts {
 	var partList:ArrayBuffer[Parts] = ArrayBuffer(bearing, flyWheel, wingMirror, brakeCable, cvJoint, brakePad, sparkPlug, brakeDisc, headlightUnit, brakeLightBulb, driveShaft, camBelt)
 	
 	def getParts(car:Boolean=true): ArrayBuffer[Parts] ={
-		var pList:ArrayBuffer[Parts] = partList
-		var returnList:ArrayBuffer[Parts] = ArrayBuffer()
+		var pList:ArrayBuffer[Parts] = new ArrayBuffer()
+		partList.copyToBuffer(pList)
+		var returnList:ArrayBuffer[Parts] = new ArrayBuffer()
 		
 		if(car) {
 			returnList = pList

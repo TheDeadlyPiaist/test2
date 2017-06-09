@@ -8,9 +8,7 @@ import scala.collection.mutable.ArrayBuffer
 	*/
 class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="", vin:String="") extends Vehicle(make, model, engineSize, colour, vin) {
 	
-	
-	var iPartList:ArrayBuffer[Parts] = Parts.getParts(false)
-	private var iWorkedOn:Employee = null
+	//private var iWorkedOn:Employee = null
 	
 	if(make == "" && model == "") {
 		var makeModel:ArrayBuffer[String] = carInfo.randomMM(false)
@@ -18,24 +16,26 @@ class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="",
 		setModel(makeModel(1))
 	}
 	
+	setPartList(generatePartList(false))
+	
 	override def toString(): String = {
 		"Bike: " + initString()
-	}
-	override def checkVehicle(): ArrayBuffer[Parts] ={
-		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
+	}/*
+	override def checkVehicle(): ArrayBuffer[Part] ={
+		var returnArray:ArrayBuffer[Part] = ArrayBuffer()
 		iPartList.foreach(i =>
 			if(i.getState) {
 				returnArray = returnArray :+ i
 			}
 		)
 		returnArray
-	}
+	}*/
 	override def breakVehicle():Unit ={
 		for(i <- 0 until 3) {
-			var rand:Int = Math.round(Math.random()*(iPartList.length-1)).toInt
-			iPartList(rand).setState(true)
+			var rand:Int = Math.round(Math.random()*(getPartList.length-1)).toInt
+			getPartList(rand).setState(true)
 		}
-	}
+	}/*
 	override def fixVehicle(timeGiven:Float):Float ={
 		var iTimeGiven:Float = timeGiven
 		for(i <- iPartList.indices) {
@@ -58,5 +58,5 @@ class Bike (make:String="", model:String="", engineSize:Int=0, colour:String="",
 	
 	override def getWorkedOn:Boolean = if(iWorkedOn != null) true else false
 	override def getWorkedOnBy:Any = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
-	override def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee
+	override def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee*/
 }

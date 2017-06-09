@@ -12,7 +12,6 @@ class Car (make:String="", model:String="", engineSize:Int=0, colour:String="", 
 	
 	//var iPartList:ArrayBuffer[Parts] = Parts.getParts()
 	//private var iWorkedOn:Employee = null
-	setPartList(Parts.getParts())
 	
 	if(make == "" && model == "") {
 		var makeModel:ArrayBuffer[String] = carInfo.randomMM()
@@ -20,9 +19,12 @@ class Car (make:String="", model:String="", engineSize:Int=0, colour:String="", 
 		setModel(makeModel(1))
 	}
 	
+	setPartList(generatePartList())
+	
 	override def toString(): String = {
 		"Car: " + initString()
-	}/*
+	}
+	/*
 	override def checkVehicle(): ArrayBuffer[Parts] ={
 		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
 		iPartList.foreach(i =>
@@ -31,13 +33,13 @@ class Car (make:String="", model:String="", engineSize:Int=0, colour:String="", 
 			}
 		)
 		returnArray
-	}
+	}*/
 	override def breakVehicle():Unit ={
 		for(i <- 0 until 3) {
-			var rand:Int = Math.round(Math.random()*(iPartList.length-1)).toInt
-			iPartList(rand).setState(true)
+			var rand:Int = Math.round(Math.random()*(getPartList.length-1)).toInt
+			getPartList(rand).setState(true)
 		}
-	}
+	}/*
 	override def fixVehicle(timeGiven:Float):Float ={
 		var iTimeGiven:Float = timeGiven
 		for(i <- iPartList.indices) {

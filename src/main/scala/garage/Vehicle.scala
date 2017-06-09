@@ -13,7 +13,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	private var iEngineSize = engineSize
 	private var iColour = colour
 	private var iVin = vin
-	private var partList:ArrayBuffer[Parts] = ArrayBuffer()
+	private var partList:ArrayBuffer[Part] = ArrayBuffer()
 	private var iWorkedOn:Employee = null
 	
 	def clearFaults():Unit ={
@@ -21,8 +21,8 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 			partList(i).setState(false)
 		}
 	}
-	def setPartList(array:ArrayBuffer[Parts]) = partList = array
-	def getPartList:ArrayBuffer[Parts] = partList
+	def setPartList(array:ArrayBuffer[Part]) = partList = array
+	def getPartList:ArrayBuffer[Part] = partList
 	def setMake(nMake:String):Unit = iMake = nMake
 	def getMake: String = iMake
 	def setModel(nModel:String): Unit =	iModel = nModel
@@ -50,11 +50,11 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def initString(): String = {
 		s"$iMake, $iModel"
 	}
-	def checkVehicle(): ArrayBuffer[Parts] ={
-		var returnArray:ArrayBuffer[Parts] = ArrayBuffer()
+	def checkVehicle(): ArrayBuffer[Part] ={
+		var returnArray:ArrayBuffer[Part] = ArrayBuffer()
 		getPartList.foreach(i =>
 			if(i.getState) {
-				var part:Parts = i
+				var part:Part = i
 				returnArray = returnArray :+ part
 			}
 		)
@@ -72,7 +72,7 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 		timeGiven - iTimeGiven
 	}
 	def getTotalTime: Float ={
-		var listCheck:ArrayBuffer[Parts] = new ArrayBuffer[Parts]()
+		var listCheck:ArrayBuffer[Part] = new ArrayBuffer()
 		var totalTime:Float = 0
 		listCheck = checkVehicle()
 		for(i <- listCheck.indices) {
@@ -85,4 +85,14 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def getWorkedOnBy:Any = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
 	def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee
 	
+	def generatePartList(car:Boolean=true): ArrayBuffer[Part] = {
+		var references:ArrayBuffer[Parts] = Parts.getParts(car)
+		var createdList:ArrayBuffer[Part] = ArrayBuffer()
+		
+		references.foreach(i => {
+			var newPart:Part = new Part(i.getName, i.getCost, i.getTimeToFix, i.getBike)
+			createdList = createdList :+ newPart
+		})
+		createdList
+	}
 }
