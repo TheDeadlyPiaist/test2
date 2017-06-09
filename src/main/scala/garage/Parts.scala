@@ -42,8 +42,8 @@ object Parts {
 		override def toString:String = getName
 	}
 	
-	var bearing:Parts = Parts("Bearing", 10, 20)
-	var flyWheel:Parts = Parts("Flywheel", 300, 90)
+	var bearing:Parts = Parts("Bearing", 10, 120)
+	var flyWheel:Parts = Parts("Flywheel", 300, 120)
 	var wingMirror:Parts = Parts("Wing Mirror", 25, 30)
 	var brakeCable:Parts = Parts("Brake Cable", 15, 30)
 	var cvJoint:Parts = Parts("Constant Velocity Joint", 30, 60, false)
@@ -54,8 +54,9 @@ object Parts {
 	var brakeLightBulb:Parts = Parts("Brake light bulb", 3, 10)
 	var driveShaft:Parts = Parts("Drive Shaft", 80, 40, false)
 	var camBelt:Parts = Parts("Cam Belt", 10, 40)
+	var window:Parts = Parts("Window", 200, 90, false)
 	
-	var partList:ArrayBuffer[Parts] = ArrayBuffer(bearing, flyWheel, wingMirror, brakeCable, cvJoint, brakePad, sparkPlug, brakeDisc, headlightUnit, brakeLightBulb, driveShaft, camBelt)
+	var partList:ArrayBuffer[Parts] = ArrayBuffer(bearing, flyWheel, wingMirror, brakeCable, cvJoint, brakePad, sparkPlug, brakeDisc, headlightUnit, brakeLightBulb, driveShaft, camBelt, window)
 	
 	def getParts(car:Boolean=true): ArrayBuffer[Parts] ={
 		var pList:ArrayBuffer[Parts] = new ArrayBuffer()

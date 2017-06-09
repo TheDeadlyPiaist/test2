@@ -85,6 +85,12 @@ class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin
 	def getWorkedOnBy:Any = if(iWorkedOn != null) iWorkedOn else "Not being worked on"
 	def beingWorkedOn(employee: Employee):Unit = iWorkedOn = employee
 	
+	def getTotalCost:Float ={
+		var returnCost:Float = 0
+		getPartList.foreach(i => if(i.getState) returnCost = returnCost + i.getCost)
+		returnCost
+	}
+	
 	def generatePartList(car:Boolean=true): ArrayBuffer[Part] = {
 		var references:ArrayBuffer[Parts] = Parts.getParts(car)
 		var createdList:ArrayBuffer[Part] = ArrayBuffer()

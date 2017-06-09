@@ -37,46 +37,13 @@ object Garage extends App {
 			}
 		}
 	}
-	
 	def removeAllVehicles(): Unit = bookedIn = null
-	
 	def newEmployee(name:String, age:Int, annualWage:Float, jobRole:String): Unit ={
 		var newEmp:Employee = new Employee(name, age, annualWage, jobRole)
 		employeeList :+ newEmp
 	}
-	
-	def fixingVehicle(vehicle: Vehicle): Unit ={
-	
-	}
-	
 	def calculateBill(timeTaken:Float, labourCost:Float, vehicle:Vehicle, partCost:Float): Float ={
 		timeTaken*labourCost + partCost
-	}
-	
-	def openGarage (): Unit ={
-		//var totalTime:Float = 0
-		//totalAvailableTime = timePerDayPerPerson*employeeList.length
-		for(i <- 1 to 8) {
-			bookedIn = bookedIn :+ newCar()
-		}
-		for(i <- 1 to 3) {
-			bookedIn = bookedIn :+ newBike()
-		}
-		//for(i <- bookedIn.indices) {
-		//	totalTime += bookedIn(i).getTotalTime
-		//}
-		//timeNeeded = totalTime
-		
-		breakVehicles()
-		
-		bookedIn.foreach(i => {
-			println("Vehicle: " + i.getMake + " " + i.getModel() + " 	Broken Parts: " + i.checkVehicle())
-		})
-		println("")
-		println("")
-		
-		assignJobs()
-		fixVehicles()
 	}
 	def assignJobs (): Unit ={
 		for(i <- bookedIn.indices) {
@@ -98,15 +65,21 @@ object Garage extends App {
 			println("Jobs: " + i.getCurrentJobs.length)
 			println("")
 			i.getCurrentJobs.foreach(j => {
-				var brokenPartsAsString = j
+				val perMinuteCost:Double = 0.6666666666666
+				val labour:Double = j.getTotalTime*perMinuteCost.toDouble
+				val partCost:Double = j.getTotalCost.toDouble
+				val profit:Double = partCost*0.2
+				val totCost:Double = labour + partCost + profit
+				
 				println("------------")
-				val tn:Float = j.getTotalTime //Time needed
-				val rt:Float = i.energyGet //Remaining time
-				val tu:Float = j.fixVehicle(rt) //Time used
+				var tn:Float = j.getTotalTime //Time needed
+				var rt:Float = i.energyGet //Remaining time
+				var tu:Float = j.fixVehicle(rt) //Time used
 				i.energyUse(tu)
 				println("Vehicle: " + j.toString)
-				println(s"			Time Needed: $tn			Time used: $tu 			Energy remaining: " + i.energyGet)
-				println(brokenPartsAsString)
+				println(f"			Time Needed: $tn%3.0f minutes			Time used: $tu%3.0f minutes 			Energy remaining: " + (i.energyGet))
+				println(f"Labour Cost: £$labour%5.2f		Parts Cost: £$partCost%5.2f		VAT(20%%): £$profit%5.2f")
+				println(f"Total Cost to Customer: £$totCost%5.2f")
 			})
 			println("------------")
 		})
@@ -127,5 +100,34 @@ object Garage extends App {
 			if(!bookedIn(i).getWorkedOn) {
 			}
 		}
+	}
+	
+	def openGarage (): Unit ={
+		//var totalTime:Float = 0
+		//totalAvailableTime = timePerDayPerPerson*employeeList.length
+		for(i <- 1 to 8) {
+			bookedIn = bookedIn :+ newCar()
+		}
+		for(i <- 1 to 3) {
+			bookedIn = bookedIn :+ newBike()
+		}
+		//for(i <- bookedIn.indices) {
+		//	totalTime += bookedIn(i).getTotalTime
+		//}
+		//timeNeeded = totalTime
+		
+		breakVehicles()
+		
+		bookedIn.foreach(i => {
+			println("Vehicle: " + i.getMake + " " + i.getModel() + "-------Broken Parts: " + i.checkVehicle())
+		})
+		println("")
+		println("")
+		
+		assignJobs()
+		fixVehicles()
+	}
+	def closeGarage():Unit ={
+	
 	}
 }
