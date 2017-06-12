@@ -7,7 +7,7 @@ import scala.collection.mutable.ArrayBuffer
 /**
 	* Created by duane on 05/06/2017.
 	*/
-class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin:String="", car:Boolean=true) {
+abstract class Vehicle(make:String, model:String, engineSize:Int=0, colour:String="", vin:String="", car:Boolean=true) {
 	private var iMake = make
 	private var iModel = model
 	private var iEngineSize = engineSize

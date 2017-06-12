@@ -5,13 +5,13 @@ object Garage extends App {
 	
 	var bookedIn: ArrayBuffer[Vehicle] = ArrayBuffer()
 	var employeeList: ArrayBuffer[Employee] = ArrayBuffer()
+	var totalTake:Double = 0
 	
-	//var timeNeeded:Float = 0
 	var timePerDayPerPerson:Float = 480
-	//var totalAvailableTime:Float = 0
 	
 	init()
 	openGarage()
+	closeGarage()
 	
 	def init(): Unit ={
 		val jack:Employee = new Employee("Jack", 21, 21000, "Mechanic", timePerDayPerPerson)
@@ -59,7 +59,7 @@ object Garage extends App {
 	}
 	def fixVehicles():Unit ={
 		employeeList.foreach(i => {
-			println("=================================================================================")
+			println("==================================================================================")
 			println("Employee: " + i.getName())
 			println("Total energy: " + i.energyGet)
 			println("Jobs: " + i.getCurrentJobs.length)
@@ -70,6 +70,7 @@ object Garage extends App {
 				val partCost:Double = j.getTotalCost.toDouble
 				val profit:Double = partCost*0.2
 				val totCost:Double = labour + partCost + profit
+				totalTake += totCost
 				
 				println("------------")
 				var tn:Float = j.getTotalTime //Time needed
@@ -83,7 +84,7 @@ object Garage extends App {
 			})
 			println("------------")
 		})
-		println("=================================================================================")
+		println("==================================================================================")
 	}
 	def breakVehicles():Unit ={
 		bookedIn.foreach(a => if(a.checkVehicle().isEmpty){a.breakVehicle()})
@@ -103,18 +104,12 @@ object Garage extends App {
 	}
 	
 	def openGarage (): Unit ={
-		//var totalTime:Float = 0
-		//totalAvailableTime = timePerDayPerPerson*employeeList.length
 		for(i <- 1 to 8) {
 			bookedIn = bookedIn :+ newCar()
 		}
 		for(i <- 1 to 3) {
 			bookedIn = bookedIn :+ newBike()
 		}
-		//for(i <- bookedIn.indices) {
-		//	totalTime += bookedIn(i).getTotalTime
-		//}
-		//timeNeeded = totalTime
 		
 		breakVehicles()
 		
@@ -128,6 +123,26 @@ object Garage extends App {
 		fixVehicles()
 	}
 	def closeGarage():Unit ={
-	
+		var vehFix:Int = 0
+		var needFix:ArrayBuffer[Vehicle] = ArrayBuffer()
+		
+		bookedIn.foreach(i => {
+			if(i.checkVehicle().isEmpty) {
+				vehFix += 1
+			} else {
+				needFix = needFix :+ i
+			}
+		})
+		println("================================                  ================================")
+		println("================================ End of Day Print ================================")
+		println("================================                  ================================")
+		println("==================================================================================")
+		println(f"==  Total income: £$totalTake%5.2f")
+		println(s"==  Vehicles fixed: $vehFix")
+		if(!needFix.isEmpty) {
+			needFix.foreach(a => println(a.getMake + " " + a.getModel()))
+		} else {
+			print("== All vehicles fixed")
+		}
 	}
 }
