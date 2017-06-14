@@ -5,7 +5,7 @@ abstract class Ship(name:String, length:Int) {
 	private var iLength:Int = length
 	def getName:String = iName
 	def getLength:Int = iLength
-}
+}/*
 object Ship {
 	private class patrolBoat(name:String, length:Int) extends Ship(name, length)
 	private class destroyer(name:String, length:Int) extends Ship(name, length)
@@ -19,3 +19,4 @@ object Ship {
 	def newBattleship = new battleship("Battleship", 4)
 	def newAircraftCarrier = new aircraftcarrier("Aircraft Carrier", 5)
 }
+*/
