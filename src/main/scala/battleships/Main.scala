@@ -9,8 +9,8 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input._
 import scalafx.scene.shape.Rectangle
 import scalafx.Includes._
-import scalafx.scene.control.Label
 import scalafx.scene.layout.Pane
+import scalafx.scene.paint.Color
 
 object Main extends JFXApp {
 	val mapAlpha:Map[String, Int] = Map("A" -> 0, "B" -> 1, "C" -> 3, "D" -> 4, "E" -> 5, "F" -> 6, "G" -> 7, "H" -> 8,"I" -> 9,"J" -> 10)
@@ -45,7 +45,7 @@ object Main extends JFXApp {
 			topTextField.layoutX = playerGrid.getX
 			topTextField.layoutY = 150
 			topTextField.font = textFont
-			topTextField.fill = "white"
+			topTextField.fill = Color.White
 			
 			
 			var patrolBoatP:ImageView = new ImageView(new Image("file:src/images/ships/patrol boat.png"))
