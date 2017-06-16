@@ -18,6 +18,7 @@ object Main extends JFXApp {
 	val offset:Double = 37
 	val gridP:List[Int] = List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 	var shipGridPositions:ListBuffer[List[Double]] = ListBuffer()
+	var enemyShipPositions:ListBuffer[List[Double]] = ListBuffer()
 	var gridHitPlayer:Array[Int] = Array()
 	var gridMissPlayer:Array[Int] = Array()
 	var shipTypes:List[Ship] = List(Ship.newPatrolBoat, Ship.newDestroyer, Ship.newSubmarine, Ship.newBattleship, Ship.newAircraftCarrier)
@@ -26,7 +27,13 @@ object Main extends JFXApp {
 		title = "Battleships 1.0"
 		
 		scene = new Scene(1600, 800) {
+			var targetMarker:ImageView = new ImageView(new Image("file:src/images/battleshipTarget.png"))
+			
 			var container:Pane = new Pane()
+			var hitMarkContain:Pane = new Pane()
+			var targetMarkerContain:Pane = new Pane()
+			targetMarkerContain.children.add(targetMarker)
+			targetMarker.visible = false
 			
 			val textFont:Font = new Font("Times New Roman", 40)
 			
@@ -60,6 +67,10 @@ object Main extends JFXApp {
 			
 			var rectan = Rectangle(playerGrid.getX+40, playerGrid.getY+38, gridWidth, gridWidth)
 			
+			def newHitMarker(hit:Boolean):Image ={
+				if(hit) new Image("file:src/images/battleshipHit.png")
+				else new Image("src/images/battleshipMiss.png")
+			}
 			def shipRotation():Unit ={
 				val i = playerBoats(curBoatPlace)
 				i.rotate = i.getRotate + 90
@@ -96,7 +107,7 @@ object Main extends JFXApp {
 				}
 				returnList.toList
 			}
-			def setPosition(mX:Double, mY:Double, asNumericOffset:Boolean = false):List[Double] = {
+			def setPosition(mX:Double, mY:Double, asIndexOffset:Boolean = false):List[Double] = {
 				val oO:List[Double] = List(playerGrid.getX+40, playerGrid.getY+38) //Original Offset
 				var returnList:List[Double] = List()
 				for(i <- gridP.indices) {
@@ -104,7 +115,25 @@ object Main extends JFXApp {
 						val xOffset:Double = oO.head + gridP(i)*gridWidth
 						val yOffset:Double = oO(1) + gridP(j)*gridWidth
 						if((mX >= xOffset && mX <= xOffset+gridWidth) && (mY >= yOffset && mY <= yOffset+gridWidth)) {
-							if(!asNumericOffset) {
+							if(!asIndexOffset) {
+								returnList = List(xOffset, yOffset)
+							} else {
+								returnList = List(i.toDouble, j.toDouble)
+							}
+						}
+					}
+				}
+				returnList
+			}
+			def enemyGridPos(mX:Double, mY:Double, asIndexOffset:Boolean = false):List[Double] = {
+				val oO:List[Double] = List(enemyGrid.getX+40, enemyGrid.getY+38) //Original Offset
+				var returnList:List[Double] = List()
+				for(i <- gridP.indices) {
+					for(j <- gridP.indices) {
+						val xOffset:Double = oO.head + gridP(i)*gridWidth
+						val yOffset:Double = oO(1) + gridP(j)*gridWidth
+						if((mX >= xOffset && mX <= xOffset+gridWidth) && (mY >= yOffset && mY <= yOffset+gridWidth)) {
+							if(!asIndexOffset) {
 								returnList = List(xOffset, yOffset)
 							} else {
 								returnList = List(i.toDouble, j.toDouble)
@@ -167,9 +196,17 @@ object Main extends JFXApp {
 				}
 			}
 			onMouseMoved = (e:MouseEvent) => {
-				var placeOnGrid:List[Double] = setPosition(e.getX, e.getY)
+				val placeOnGrid:List[Double] = setPosition(e.getX, e.getY)
+				val placeOnEnemyGrid:List[Double] = enemyGridPos(e.getX, e.getY)
 				if(!boatsPlaced && (placeOnGrid.length > 1)) {
 					shipPosition(e.getX, e.getY)
+				}
+				if(boatsPlaced && placeOnEnemyGrid.length > 1) {
+					targetMarker.visible = true
+					targetMarker.x = placeOnEnemyGrid(0)
+					targetMarker.y = placeOnEnemyGrid(1)
+				} else {
+					targetMarker.visible = false
 				}
 			}
 			onKeyPressed = (e:KeyEvent) => {
@@ -178,7 +215,7 @@ object Main extends JFXApp {
 				}
 			}
 			
-			content = List(bg, playerGrid, enemyGrid, container, topTextField)
+			content = List(bg, playerGrid, enemyGrid, container, topTextField, hitMarkContain, targetMarkerContain)
 			
 			playerBoats.foreach(i => {
 				i.x = 100
