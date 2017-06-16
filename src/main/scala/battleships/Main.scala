@@ -1,6 +1,7 @@
 package battleships
 
 import scala.collection.mutable.ListBuffer
+import scalafx.scene.text._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
 import scalafx.scene.Scene
@@ -8,6 +9,7 @@ import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input._
 import scalafx.scene.shape.Rectangle
 import scalafx.Includes._
+import scalafx.scene.control.Label
 import scalafx.scene.layout.Pane
 
 object Main extends JFXApp {
@@ -26,6 +28,9 @@ object Main extends JFXApp {
 		scene = new Scene(1600, 800) {
 			var container:Pane = new Pane()
 			
+			val textFont:Font = new Font("Times New Roman", 40)
+			
+			
 			var playerGrid:ImageView = new ImageView(new Image("file:src/images/battleshipgrid.png"))
 			playerGrid.x = 280
 			playerGrid.y = 200
@@ -35,6 +40,13 @@ object Main extends JFXApp {
 			var bg:ImageView = new ImageView(new Image("file:src/images/wood.png"))
 			bg.fitWidth = 1600
 			bg.fitHeight = 800
+			
+			var topTextField:Text = new Text("PLACE YOUR SHIPS")
+			topTextField.layoutX = playerGrid.getX
+			topTextField.layoutY = 150
+			topTextField.font = textFont
+			topTextField.fill = "white"
+			
 			
 			var patrolBoatP:ImageView = new ImageView(new Image("file:src/images/ships/patrol boat.png"))
 			var destroyerP:ImageView = new ImageView(new Image("file:src/images/ships/destroyer.png"))
@@ -151,7 +163,7 @@ object Main extends JFXApp {
 				if(!boatsPlaced && (placeOnGrid.length > 1) && !checkCollision(placeOnGrid)) {
 					shipPosition(e.getX, e.getY)
 					shipGridPositions += shipArea(setPosition(e.getX, e.getY, true))
-					if(curBoatPlace < 4) curBoatPlace += 1 else boatsPlaced = true
+					if(curBoatPlace < 4) curBoatPlace += 1 else {topTextField.text = ""; boatsPlaced = true}
 				}
 			}
 			onMouseMoved = (e:MouseEvent) => {
@@ -166,7 +178,7 @@ object Main extends JFXApp {
 				}
 			}
 			
-			content = List(bg, playerGrid, enemyGrid, container)
+			content = List(bg, playerGrid, enemyGrid, container, topTextField)
 			
 			playerBoats.foreach(i => {
 				i.x = 100
