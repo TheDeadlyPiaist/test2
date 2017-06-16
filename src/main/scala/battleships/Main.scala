@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import scalafx.scene.text._
 import scalafx.application.JFXApp
 import scalafx.application.JFXApp.PrimaryStage
-import scalafx.scene.Scene
+import scalafx.scene.{Cursor, Scene}
 import scalafx.scene.image.{Image, ImageView}
 import scalafx.scene.input._
 import scalafx.scene.shape.Rectangle
@@ -19,9 +19,8 @@ object Main extends JFXApp {
 	val gridP:List[Int] = List(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
 	var shipGridPositions:ListBuffer[List[Double]] = ListBuffer()
 	var enemyShipPositions:ListBuffer[List[Double]] = ListBuffer()
-	var gridHitPlayer:Array[Int] = Array()
-	var gridMissPlayer:Array[Int] = Array()
 	var shipTypes:List[Ship] = List(Ship.newPatrolBoat, Ship.newDestroyer, Ship.newSubmarine, Ship.newBattleship, Ship.newAircraftCarrier)
+	var playerHits:ListBuffer[List[Double]] = ListBuffer()
 	
 	var myStage:PrimaryStage = new PrimaryStage {
 		title = "Battleships 1.0"
@@ -36,7 +35,6 @@ object Main extends JFXApp {
 			targetMarker.visible = false
 			
 			val textFont:Font = new Font("Times New Roman", 40)
-			
 			
 			var playerGrid:ImageView = new ImageView(new Image("file:src/images/battleshipgrid.png"))
 			playerGrid.x = 280
@@ -67,18 +65,31 @@ object Main extends JFXApp {
 			
 			var rectan = Rectangle(playerGrid.getX+40, playerGrid.getY+38, gridWidth, gridWidth)
 			
-			def newHitMarker(hit:Boolean):Image ={
-				if(hit) new Image("file:src/images/battleshipHit.png")
-				else new Image("src/images/battleshipMiss.png")
+			def newHitMarker(hit:Boolean, l:List[Double]):ImageView ={
+				var nI:ImageView = null
+				if(hit) {
+					nI = new ImageView(new Image("file:src/images/battleshipHit.png"))
+					nI.x = l(0)
+					nI.y = l(1)
+				} else {
+					nI = new ImageView(new Image("file:src/images/battleshipMiss.png"))
+				}
+				nI.x = l(0)
+				nI.y = l(1)
+				nI
 			}
 			def shipRotation():Unit ={
-				val i = playerBoats(curBoatPlace)
-				i.rotate = i.getRotate + 90
-				if(i.getRotate == 360) {i.rotate = 0}
-				i.getRotate match {
-					case 0 | 180=> i.translateY = 0; i.translateX = 0
-					case 90 | 270 => i.translateY = -(i.image().getHeight - gridWidth)/2; i.translateX = (i.image().getHeight-gridWidth)/2
-					case _ =>
+				if(!boatsPlaced) {
+					val i = playerBoats(curBoatPlace)
+					i.rotate = i.getRotate + 90
+					if(i.getRotate == 360) {
+						i.rotate = 0
+					}
+					i.getRotate match {
+						case 0 | 180 => i.translateY = 0; i.translateX = 0
+						case 90 | 270 => i.translateY = -(i.image().getHeight - gridWidth) / 2; i.translateX = (i.image().getHeight - gridWidth) / 2
+						case _ =>
+					}
 				}
 			}
 			def shipPosition(x:Double, y:Double): Unit ={
@@ -186,13 +197,32 @@ object Main extends JFXApp {
 				}
 				returnB
 			}
+			def checkHit(l:List[Double], targetP:Boolean = true):Boolean ={
+				var returnB:Boolean = false
+				if(!targetP) {
+					if(enemyShipPositions.nonEmpty) {
+					
+					}
+				}
+				returnB
+			}
 			//==================================================================================================== Events =============================
 			onMouseClicked = (e:MouseEvent) => {
 				val placeOnGrid:List[Double] = setPosition(e.getX, e.getY, true)
+				val placeOnEnemyGrid:List[Double] = enemyGridPos(e.getX, e.getY)
 				if(!boatsPlaced && (placeOnGrid.length > 1) && !checkCollision(placeOnGrid)) {
 					shipPosition(e.getX, e.getY)
 					shipGridPositions += shipArea(setPosition(e.getX, e.getY, true))
 					if(curBoatPlace < 4) curBoatPlace += 1 else {topTextField.text = ""; boatsPlaced = true}
+				}
+				if(boatsPlaced && placeOnEnemyGrid.length > 1) {
+					if(checkHit(placeOnEnemyGrid) == true) {
+					
+					} else {
+						var newHM:ImageView = newHitMarker(false, placeOnEnemyGrid)
+						hitMarkContain.children.add(newHM)
+						hit
+					}
 				}
 			}
 			onMouseMoved = (e:MouseEvent) => {
